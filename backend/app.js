@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 import bodyParser from 'body-parser';
 import librosRoutes from './routes/librosRoutes.js';
 import spendRoutes from './routes/spendRoutes.js';
-import authRoutes from './routes/authRoutes.js'; // Importa las rutas de autenticación
+import authRoutes from './routes/authRoutes.js'; // Rutas de autenticación
 import { protect } from './middleware/authMiddleware.js'; // Middleware de autenticación
 
 dotenv.config();
@@ -17,21 +17,20 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Middlewares
-app.use(bodyParser.json());
-app.use(express.json());
+app.use(express.json()); // Solo esta línea es suficiente para parsear JSON
 app.use(express.static(path.join(__dirname, 'public'))); // Archivos estáticos desde 'public'
 
 // Rutas
 app.use('/libros', protect, librosRoutes); // Rutas de libros
-app.use('/spend', protect, spendRoutes); // Rutas de autores
-app.use('/auth', authRoutes); // Rutas de autenticación
+app.use('/spend', protect, spendRoutes); // Rutas de gastos, protegidas
+app.use('/auth', authRoutes); // Rutas de autenticación, no protegidas
 
 // Página principal
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Rutas para las vistas
+// Rutas para las vistas de login y registro
 app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'login.html'));
 });
