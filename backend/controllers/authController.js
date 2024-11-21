@@ -46,3 +46,18 @@ export const loginUser = async (req, res) => {
     res.status(500).json({ message: 'Error al iniciar sesión' });
   }
 };
+// controllers/authController.js
+export const logoutUser = async (req, res) => {
+  try {
+    // Limpiar la cookie del token
+    res.clearCookie('token', { path: '/' });
+
+    // Responder con éxito
+    res.status(200).json({ message: 'Logout exitoso' });
+  } catch (error) {
+    console.error('Error al realizar el logout:', error);
+
+    // Responder con error genérico
+    res.status(500).json({ message: 'Error al realizar el logout' });
+  }
+};

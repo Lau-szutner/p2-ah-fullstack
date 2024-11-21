@@ -1,10 +1,29 @@
-import * as Yup from 'yup';
+// models/spendModel.js
+import mongoose from 'mongoose';
 
-export const spendValidationSchema = Yup.object().shape({
-  userId: Yup.string().required('El usuario es obligatorio'),
-  title: Yup.string().trim().required('El título es obligatorio'),
-  amount: Yup.number()
-    .typeError('El monto debe ser un número')
-    .required('El monto es obligatorio'),
-  description: Yup.string().trim().notRequired(), // La descripción es opcional
+const spendSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  }, // Relación con el usuario
+  title: {
+    type: String,
+    required: [true, 'El nombre es obligatorio'],
+    trim: true,
+  },
+  amount: {
+    type: Number,
+    required: [true, 'El monto es obligatorio'],
+  },
+  description: {
+    type: String,
+    trim: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
+const Spend = mongoose.model('Spend', spendSchema);
+export default Spend;

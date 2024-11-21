@@ -1,6 +1,6 @@
 import './App.css';
-import Header from './components/Header';
-import Spend from './components/Spend';
+import Header from './components/Header.jsx';
+import Spend from './components/Spend.jsx';
 import SpendForm from './components/SpendForm';
 import RegisterForm from './components/RegisterForm';
 import { useState, useEffect } from 'react';
@@ -38,15 +38,15 @@ function App() {
       <Header className="w-full" />
 
       <main className="flex-grow p-6 bg-teal-800 shadow-md rounded-lg mx-4 sm:mx-10 mt-6 text-white">
-        <h1 className="text-3xl font-bold">Bienvenido a mi App</h1>
-        <p className="mt-4">
+        <h1 className="text-3xl font-bold text-center">Bienvenido a mi App</h1>
+        <p className="mt-4 text-center">
           Aquí puedes agregar el contenido principal de tu aplicación.
         </p>
 
         {/* Componente Spend */}
-        <div className="mt-6">
+        {/* <div className="mt-6">
           <Spend title="Escuela" description="Davinci" amount="40000" />
-        </div>
+        </div> */}
 
         {/* Mostrar el formulario de registro si no hay token */}
         {!token ? (

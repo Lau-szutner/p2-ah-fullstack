@@ -1,7 +1,9 @@
-
-// routes/authRoutes.js
 import express from 'express';
-import { registerUser, loginUser } from '../controllers/authController.js';
+import {
+  registerUser,
+  loginUser,
+  logoutUser,
+} from '../controllers/authController.js';
 
 const router = express.Router();
 
@@ -10,5 +12,8 @@ router.post('/register', registerUser);
 
 // Ruta para el login de usuarios
 router.post('/login', loginUser);
+
+// Ruta para el logout de usuarios
+router.post('/logout', logoutUser);
 
 export default router;
