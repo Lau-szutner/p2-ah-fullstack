@@ -2,6 +2,7 @@ import './App.css';
 import Header from './components/Header';
 import Spend from './components/Spend';
 import SpendForm from './components/SpendForm'; // Importamos el formulario
+import RegisterForm from './components/RegisterForm';
 import { useState } from 'react';
 
 function App() {
@@ -48,12 +49,14 @@ function App() {
         {/* Mostrar formulario si está visible */}
         {isFormVisible && (
           <section className="mt-10">
-            <h2 className="text-xl font-semibold mb-4 text-gray-800">
+            <h2 className="text-xl font-semibold mb-4 text-center">
               Agregar nuevo gasto
             </h2>
             <SpendForm onSubmit={handleFormSubmit} />
           </section>
         )}
+
+        <RegisterForm />
       </main>
     </div>
   );

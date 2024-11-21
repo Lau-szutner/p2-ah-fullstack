@@ -11,12 +11,18 @@ const SpendForm = ({ onSubmit }) => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(spendValidationSchema),
+    defaultValues: {
+      userId: '',
+      title: '',
+      amount: '',
+      description: '',
+    },
   });
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="bg-white p-6 rounded-lg shadow-lg max-w-xl mx-auto space-y-6"
+      className="bg-white p-6 rounded-lg shadow-lg max-w-xl mx-auto space-y-6 text-black"
     >
       <h2 className="text-2xl font-semibold text-gray-800">Gastos</h2>
 
