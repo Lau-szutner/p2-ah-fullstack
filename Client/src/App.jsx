@@ -1,16 +1,26 @@
 import './App.css';
 import Header from './components/Header';
 import Spend from './components/Spend';
-import SpendForm from './components/SpendForm'; // Importamos el formulario
+import SpendForm from './components/SpendForm';
 import RegisterForm from './components/RegisterForm';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Cookies from 'js-cookie'; // Importamos js-cookie
 
 function App() {
+  // Estado para manejar el token
+  const [token, setToken] = useState(null);
+
+  // Consumir la cookie al cargar el componente
+  useEffect(() => {
+    const savedToken = Cookies.get('token'); // Obtener el token de la cookie
+    if (savedToken) {
+      setToken(savedToken);
+    }
+  }, []);
+
   // Función para manejar el envío del formulario
   const handleFormSubmit = (data) => {
     console.log('Datos enviados:', data);
-    // Aquí podrías enviar los datos a tu backend, por ejemplo:
-    // fetch('/api/spends', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
   };
 
   // Estado para manejar la visibilidad del formulario
@@ -23,10 +33,8 @@ function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-teal-950">
-      {/* Navbar */}
       <Header className="w-full" />
 
-      {/* Contenido principal */}
       <main className="flex-grow p-6 bg-teal-800 shadow-md rounded-lg mx-4 sm:mx-10 mt-6 text-white">
         <h1 className="text-3xl font-bold">Bienvenido a mi App</h1>
         <p className="mt-4">
@@ -54,6 +62,14 @@ function App() {
             </h2>
             <SpendForm onSubmit={handleFormSubmit} />
           </section>
+        )}
+
+        {/* Mostrar el token si está disponible */}
+        {token && (
+          <div className="mt-6 p-4 bg-teal-700 rounded-lg">
+            <h3 className="text-lg font-semibold">Token de Autenticación:</h3>
+            <p className="text-sm">{token}</p>
+          </div>
         )}
 
         <RegisterForm />

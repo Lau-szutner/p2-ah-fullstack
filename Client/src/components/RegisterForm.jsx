@@ -1,7 +1,9 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import axios from 'axios';
 import * as yup from 'yup';
+import Cookies from 'js-cookie'; // Importamos js-cookie para manejar cookies
 
 // Validación de formulario con Yup
 const registerValidationSchema = yup.object({
@@ -19,7 +21,7 @@ const registerValidationSchema = yup.object({
     .required('Debes confirmar tu contraseña'),
 });
 
-const RegisterForm = ({ onSubmit }) => {
+const RegisterForm = () => {
   const {
     register,
     handleSubmit,
@@ -33,9 +35,32 @@ const RegisterForm = ({ onSubmit }) => {
     },
   });
 
+  const handleRegister = async (data) => {
+    try {
+      // Enviar los datos al servidor
+      const response = await axios.post(
+        'http://localhost:3000/auth/register',
+        data
+      );
+
+      // Aquí guardamos el token en una cookie
+      Cookies.set('token', response.data.token, { expires: 7 }); // Guardamos el token con un tiempo de expiración de 7 días
+
+      console.log(
+        'Registro exitoso, token almacenado en cookies:',
+        response.data.token
+      );
+
+      // Aquí puedes redirigir o hacer cualquier otra acción después del registro
+      // history.push('/dashboard');  // Si estás usando React Router
+    } catch (error) {
+      console.error('Error en el registro:', error);
+    }
+  };
+
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(handleRegister)} // Pasamos la función handleRegister
       className="bg-white p-6 rounded-lg shadow-lg max-w-xl mx-auto space-y-6 text-black"
     >
       <h2 className="text-2xl font-semibold text-gray-800">
