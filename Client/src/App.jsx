@@ -10,6 +10,8 @@ function App() {
   // Estado para manejar el token
   const [token, setToken] = useState(null);
 
+  // console.log(token);
+
   // Consumir la cookie al cargar el componente
   useEffect(() => {
     const savedToken = Cookies.get('token'); // Obtener el token de la cookie
@@ -23,7 +25,7 @@ function App() {
     console.log('Datos enviados:', data);
   };
 
-  // Estado para manejar la visibilidad del formulario
+  // Estado para manejar la visibilidad del formulario de gasto
   const [isFormVisible, setIsFormVisible] = useState(false);
 
   // Función para alternar la visibilidad del formulario
@@ -46,33 +48,41 @@ function App() {
           <Spend title="Escuela" description="Davinci" amount="40000" />
         </div>
 
-        {/* Botón para abrir/cerrar el formulario */}
-        <button
-          onClick={toggleFormVisibility}
-          className="mt-6 bg-teal-600 text-white py-2 px-4 rounded-lg hover:bg-teal-700 transition-colors"
-        >
-          {isFormVisible ? 'Cerrar Formulario' : 'Agregar Nuevo Gasto'}
-        </button>
-
-        {/* Mostrar formulario si está visible */}
-        {isFormVisible && (
+        {/* Mostrar el formulario de registro si no hay token */}
+        {!token ? (
           <section className="mt-10">
             <h2 className="text-xl font-semibold mb-4 text-center">
-              Agregar nuevo gasto
+              Regístrate para continuar
             </h2>
-            <SpendForm onSubmit={handleFormSubmit} />
+            <RegisterForm />
           </section>
-        )}
+        ) : (
+          <>
+            {/* Botón para abrir/cerrar el formulario de gasto */}
+            <button
+              onClick={toggleFormVisibility}
+              className="mt-6 bg-teal-600 text-white py-2 px-4 rounded-lg hover:bg-teal-700 transition-colors"
+            >
+              {isFormVisible ? 'Cerrar Formulario' : 'Agregar Nuevo Gasto'}
+            </button>
 
-        {/* Mostrar el token si está disponible */}
-        {token && (
-          <div className="mt-6 p-4 bg-teal-700 rounded-lg">
-            <h3 className="text-lg font-semibold">Token de Autenticación:</h3>
-            <p className="text-sm">{token}</p>
-          </div>
-        )}
+            {/* Mostrar formulario de gasto si está visible */}
+            {isFormVisible && (
+              <section className="mt-10">
+                <h2 className="text-xl font-semibold mb-4 text-center">
+                  Agregar nuevo gasto
+                </h2>
+                <SpendForm onSubmit={handleFormSubmit} />
+              </section>
+            )}
 
-        <RegisterForm />
+            {/* Mostrar el token si está disponible */}
+            <div className="mt-6 p-4 bg-teal-700 rounded-lg">
+              <h3 className="text-lg font-semibold">Token de Autenticación:</h3>
+              <p className="text-sm">{token}</p>
+            </div>
+          </>
+        )}
       </main>
     </div>
   );
