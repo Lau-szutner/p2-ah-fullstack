@@ -2,6 +2,7 @@ import './App.css';
 import Header from './components/Header.jsx';
 import SpendForm from './components/SpendForm';
 import RegisterForm from './components/RegisterForm';
+import SpendList from './components/spendList.jsx';
 import { useState, useEffect } from 'react';
 import Cookies from 'js-cookie'; // Importamos js-cookie
 
@@ -65,7 +66,7 @@ function App() {
             >
               {isFormVisible ? 'Cerrar Formulario' : 'Agregar Nuevo Gasto'}
             </button>
-
+            <SpendList></SpendList>
             {/* Mostrar formulario de gasto si está visible */}
             {isFormVisible && (
               <section className="mt-10">

@@ -4,14 +4,23 @@ import Spend from '../models/spendModel.js';
 // Obtener los gastos del usuario autenticado
 export const getSpend = async (req, res) => {
   try {
-    const userId = req.user._id; // Obtener el userId del usuario autenticado
-    const spends = await Spend.find({ userId }); // Buscar los gastos del usuario
+    const { email } = req.user; // Obtener el email del usuario autenticado
 
-    res.json(spends); // Retornar los gastos encontrados
+    // Verificar si el email está presente
+    if (!email) {
+      return res.status(400).json({ message: 'Email no proporcionado' });
+    }
+
+    // Filtrar los gastos por el email del usuario autenticado
+    const spends = await Spend.find({ email });
+
+    res.status(200).json(spends); // Retornar los gastos encontrados
   } catch (error) {
-    res.status(400).json({ message: error.message }); // Manejo de errores
+    console.error('Error al obtener los gastos:', error);
+    res.status(500).json({ message: 'Error al obtener los gastos' });
   }
 };
+
 export const createSpend = async (req, res) => {
   const { title, amount, description, email } = req.body; // Desestructurar email de la solicitud
   const userId = req.user._id; // Obtener el userId del usuario autenticado

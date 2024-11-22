@@ -20,7 +20,7 @@ const __dirname = path.dirname(__filename);
 // Habilitar CORS para todas las rutas
 app.use(
   cors({
-    origin: 'http://localhost:5174', // Asegúrate de que esto apunte a tu frontend
+    origin: 'http://localhost:5173', // Asegúrate de que esto apunte a tu frontend
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'], // Permitir Authorization en los encabezados
     credentials: true, // Permitir el envío de cookies
