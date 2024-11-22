@@ -1,4 +1,3 @@
-// controllers/authController.js
 import User from '../models/userModel.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
@@ -20,7 +19,9 @@ export const registerUser = async (req, res) => {
 
     const user = await User.create({ email, password: hashedPassword });
 
-    const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '24h' });
+    const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, {
+      expiresIn: '24h',
+    });
 
     res.status(201).json({ token });
   } catch (error) {
@@ -39,25 +40,29 @@ export const loginUser = async (req, res) => {
       return res.status(401).json({ message: 'Credenciales incorrectas' });
     }
 
-    const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '24h' });
+    const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, {
+      expiresIn: '24h',
+    });
 
     res.status(200).json({ token });
   } catch (error) {
     res.status(500).json({ message: 'Error al iniciar sesión' });
   }
 };
-// controllers/authController.js
-export const logoutUser = async (req, res) => {
+
+// Logout de usuario
+export const logoutUser = (req, res) => {
   try {
-    // Limpiar la cookie del token
+    // Limpiar el token de las cookies
     res.clearCookie('token', { path: '/' });
+
+    // También puedes asegurarte de que no haya ningún encabezado Authorization
+    res.setHeader('Authorization', '');
 
     // Responder con éxito
     res.status(200).json({ message: 'Logout exitoso' });
   } catch (error) {
     console.error('Error al realizar el logout:', error);
-
-    // Responder con error genérico
     res.status(500).json({ message: 'Error al realizar el logout' });
   }
 };

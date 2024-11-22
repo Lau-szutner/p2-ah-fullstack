@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
@@ -21,13 +21,28 @@ const registerValidationSchema = yup.object({
     .required('Debes confirmar tu contraseña'),
 });
 
+const loginValidationSchema = yup.object({
+  email: yup
+    .string()
+    .email('Debe ser un correo electrónico válido')
+    .required('El correo electrónico es obligatorio'),
+  password: yup
+    .string()
+    .min(6, 'La contraseña debe tener al menos 6 caracteres')
+    .required('La contraseña es obligatoria'),
+});
+
 const RegisterForm = () => {
+  const [isLogin, setIsLogin] = useState(true); // Estado para determinar si es login o registro
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm({
-    resolver: yupResolver(registerValidationSchema),
+    resolver: yupResolver(
+      isLogin ? loginValidationSchema : registerValidationSchema
+    ),
     defaultValues: {
       email: '',
       password: '',
@@ -37,34 +52,52 @@ const RegisterForm = () => {
 
   const handleRegister = async (data) => {
     try {
-      // Enviar los datos al servidor
       const response = await axios.post(
         'http://localhost:3000/auth/register',
         data
       );
-
-      // Aquí guardamos el token en una cookie
-      Cookies.set('token', response.data.token, { expires: 7 }); // Guardamos el token con un tiempo de expiración de 7 días
-
-      console.log(
-        'Registro exitoso, token almacenado en cookies:',
-        response.data.token
-      );
-
-      // Aquí puedes redirigir o hacer cualquier otra acción después del registro
-      // history.push('/dashboard');  // Si estás usando React Router
+      Cookies.set('token', response.data.token, { expires: 7 }); // Guardamos el token en cookies
+      Cookies.set('email', data.email, { expires: 7 }); // Guardamos el email en cookies
+      console.log('Registro exitoso, token y email almacenados en cookies');
     } catch (error) {
       console.error('Error en el registro:', error);
+      setError('email', {
+        type: 'manual',
+        message: 'Hubo un error al registrarse',
+      });
     }
+  };
+
+  const handleLogin = async (data) => {
+    try {
+      const response = await axios.post(
+        'http://localhost:3000/auth/login',
+        data
+      );
+      Cookies.set('token', response.data.token, { expires: 7 }); // Guardamos el token en cookies
+      Cookies.set('email', data.email, { expires: 7 }); // Guardamos el email en cookies
+      console.log('Login exitoso, token y email almacenados en cookies');
+    } catch (error) {
+      console.error('Error al iniciar sesión:', error);
+      setError('email', {
+        type: 'manual',
+        message: 'Credenciales incorrectas',
+      });
+    }
+  };
+
+  // Cambiar entre login y registro
+  const toggleForm = () => {
+    setIsLogin(!isLogin);
   };
 
   return (
     <form
-      onSubmit={handleSubmit(handleRegister)} // Pasamos la función handleRegister
+      onSubmit={handleSubmit(isLogin ? handleLogin : handleRegister)}
       className="bg-white p-6 rounded-lg shadow-lg max-w-xl mx-auto space-y-6 text-black"
     >
       <h2 className="text-2xl font-semibold text-gray-800">
-        Registro de Usuario
+        {isLogin ? 'Iniciar Sesión' : 'Registro de Usuario'}
       </h2>
 
       {/* Email */}
@@ -109,42 +142,55 @@ const RegisterForm = () => {
         )}
       </div>
 
-      {/* Confirm Password */}
-      <div className="space-y-2">
-        <label
-          htmlFor="confirmPassword"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Confirmar Contraseña
-        </label>
-        <input
-          id="confirmPassword"
-          type="password"
-          {...register('confirmPassword')}
-          className={`w-full p-3 border ${
-            errors.confirmPassword ? 'border-red-500' : 'border-gray-300'
-          } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500`}
-        />
-        {errors.confirmPassword && (
-          <p className="text-sm text-red-500">
-            {errors.confirmPassword.message}
-          </p>
-        )}
-      </div>
+      {/* Confirm Password (solo para registro) */}
+      {!isLogin && (
+        <div className="space-y-2">
+          <label
+            htmlFor="confirmPassword"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Confirmar Contraseña
+          </label>
+          <input
+            id="confirmPassword"
+            type="password"
+            {...register('confirmPassword')}
+            className={`w-full p-3 border ${
+              errors.confirmPassword ? 'border-red-500' : 'border-gray-300'
+            } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500`}
+          />
+          {errors.confirmPassword && (
+            <p className="text-sm text-red-500">
+              {errors.confirmPassword.message}
+            </p>
+          )}
+        </div>
+      )}
+
+      {/* Error message */}
+      {errors.email && errors.email.type === 'manual' && (
+        <p className="text-sm text-red-500">{errors.email.message}</p>
+      )}
 
       {/* Submit Button */}
       <button
         type="submit"
         className="w-full py-3 bg-indigo-600 text-white font-medium rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
       >
-        Registrar
+        {isLogin ? 'Iniciar Sesión' : 'Registrar'}
       </button>
-      <button
-        type="submit"
-        className="w-full py-3 bg-indigo-600 text-white font-medium rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-      >
-        Iniciar sesion
-      </button>
+
+      {/* Toggle between login and register */}
+      <p className="text-sm text-center text-gray-500">
+        {isLogin ? '¿No tienes cuenta?' : '¿Ya tienes cuenta?'}
+        <button
+          type="button"
+          onClick={toggleForm}
+          className="text-indigo-600 ml-1"
+        >
+          {isLogin ? 'Regístrate' : 'Inicia sesión'}
+        </button>
+      </p>
     </form>
   );
 };

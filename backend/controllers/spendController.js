@@ -12,19 +12,24 @@ export const getSpend = async (req, res) => {
     res.status(400).json({ message: error.message }); // Manejo de errores
   }
 };
-
-// Crear un nuevo gasto
 export const createSpend = async (req, res) => {
-  const { title, amount, description } = req.body;
+  const { title, amount, description, email } = req.body; // Desestructurar email de la solicitud
   const userId = req.user._id; // Obtener el userId del usuario autenticado
 
   try {
-    // Crear un nuevo gasto asociado al usuario autenticado
+    // Verificar si el email está presente
+    if (!email) {
+      return res.status(400).json({ message: 'El email es obligatorio' });
+    }
+
+    // Crear un nuevo gasto asociado al usuario autenticado y con el email
     const newSpend = new Spend({
       userId, // Asignar el userId al gasto
       title,
       amount,
       description,
+      email, // Guardar el email en el gasto
+      createdAt: new Date(), // Asignar la fecha de creación manualmente si es necesario
     });
 
     const savedSpend = await newSpend.save(); // Guardar el gasto en la base de datos

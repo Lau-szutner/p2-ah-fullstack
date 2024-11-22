@@ -20,10 +20,18 @@ const spendSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
+  email: {
+    type: String,
+    required: [true, 'El correo electrónico es obligatorio'],
+    lowercase: true, // Convertir a minúsculas para mantener consistencia
+    trim: true, // Eliminar espacios extra
+    match: [/\S+@\S+\.\S+/, 'Por favor ingrese un correo electrónico válido'], // Validación de formato de correo
+  },
   createdAt: {
     type: Date,
     default: Date.now,
   },
 });
+
 const Spend = mongoose.model('Spend', spendSchema);
 export default Spend;
