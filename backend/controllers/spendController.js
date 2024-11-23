@@ -47,3 +47,21 @@ export const createSpend = async (req, res) => {
     res.status(400).json({ message: error.message }); // Manejo de errores
   }
 };
+
+// controllers/spendController.js
+export const deleteSpend = async (req, res) => {
+  const { id } = req.params; // Obtener el ID del gasto desde los parámetros de la URL
+
+  try {
+    const deletedSpend = await Spend.findByIdAndDelete(id); // Eliminar el gasto con el ID proporcionado
+
+    if (!deletedSpend) {
+      return res.status(404).json({ message: 'Gasto no encontrado' });
+    }
+
+    res.status(200).json({ message: 'Gasto eliminado con éxito' });
+  } catch (error) {
+    console.error('Error al eliminar el gasto:', error);
+    res.status(500).json({ message: 'Error al eliminar el gasto' });
+  }
+};

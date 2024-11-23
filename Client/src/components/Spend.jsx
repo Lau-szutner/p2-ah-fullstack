@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
-const Spend = ({ title, description, amount, onDelete }) => {
+// components/Spend.jsx
+const Spend = ({ _id, title, description, amount, onDelete }) => {
   const [categoria, setCategoria] = useState('Comida');
   const categorias = [
     'Comida',
@@ -47,7 +48,7 @@ const Spend = ({ title, description, amount, onDelete }) => {
 
       {/* Botón para eliminar la tarjeta */}
       <button
-        onClick={onDelete}
+        onClick={() => onDelete(_id)} // Pasar el _id al hacer clic en el botón
         className="mt-6 bg-red-600 text-white p-3 rounded-lg hover:bg-red-700 transition-colors duration-200"
       >
         Eliminar

@@ -50,10 +50,33 @@ const SpendList = () => {
     fetchSpends(); // Llamar a la API al cargar el componente
   }, []);
 
-  // Función para eliminar un gasto
-  const handleDelete = (id) => {
-    setSpends(spends.filter((spend) => spend._id !== id));
-    // Opcional: También puedes realizar una solicitud DELETE a tu API aquí.
+  // components/SpendList.jsx
+  const handleDelete = async (id) => {
+    const token = getTokenFromCookies();
+
+    if (!token) {
+      setError('Token no encontrado en las cookies');
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:3000/spend/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`, // Usa el token obtenido de las cookies
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al eliminar el gasto');
+      }
+
+      // Si la eliminación es exitosa, actualizar el estado para quitar el gasto de la lista
+      setSpends(spends.filter((spend) => spend._id !== id));
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   if (loading) return <p>Cargando gastos...</p>;
