@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 // components/Spend.jsx
-const Spend = ({ _id, title, description, amount, onDelete }) => {
+const Spend = ({ title, description, amount, onDelete, createdAt }) => {
   const [categoria, setCategoria] = useState('Comida');
   const categorias = [
     'Comida',
@@ -18,6 +18,8 @@ const Spend = ({ _id, title, description, amount, onDelete }) => {
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg border border-gray-200 w-full max-w-sm">
       <h2 className="text-xl font-semibold text-gray-800">{title}</h2>
+
+      <h3 className="text-xl font-semibold text-gray-800">{createdAt}</h3>
       <p className="text-gray-600 mt-2">{description}</p>
 
       <div className="flex justify-between items-center mt-4">

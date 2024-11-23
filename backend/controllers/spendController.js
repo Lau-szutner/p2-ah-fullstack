@@ -22,7 +22,7 @@ export const getSpend = async (req, res) => {
 };
 
 export const createSpend = async (req, res) => {
-  const { title, amount, description, email } = req.body; // Desestructurar email de la solicitud
+  const { title, amount, description, email, date } = req.body; // Desestructurar email de la solicitud
   const userId = req.user._id; // Obtener el userId del usuario autenticado
 
   try {

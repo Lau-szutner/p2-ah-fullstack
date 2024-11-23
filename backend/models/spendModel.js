@@ -12,6 +12,7 @@ const spendSchema = new mongoose.Schema({
     required: [true, 'El nombre es obligatorio'],
     trim: true,
   },
+
   amount: {
     type: Number,
     required: [true, 'El monto es obligatorio'],

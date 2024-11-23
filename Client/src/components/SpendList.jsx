@@ -90,6 +90,16 @@ const SpendList = () => {
           title={spend.title}
           description={spend.description}
           amount={spend.amount}
+          createdAt={new Date(spend.createdAt).toLocaleString('es-ES', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+
+            hour12: false,
+          })} // Formateando la fecha directamente
           onDelete={() => handleDelete(spend._id)}
         />
       ))}
