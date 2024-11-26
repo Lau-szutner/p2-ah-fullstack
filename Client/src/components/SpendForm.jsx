@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { spendValidationSchema } from '../validation/spendValidationSchema';
@@ -6,6 +6,18 @@ import axios from 'axios'; // Importar axios
 import Cookies from 'js-cookie'; // Importar js-cookie para manejar las cookies
 
 const SpendForm = ({ email, onSubmit }) => {
+  const [categoria, setCategoria] = useState('Comida');
+  const categorias = [
+    'Comida',
+    'Servicios',
+    'Gastos varios',
+    'Transporte',
+    'Salud',
+  ];
+
+  const handleCategoriaClick = (categoriaSeleccionada) => {
+    setCategoria(categoriaSeleccionada);
+  };
   const {
     register,
     handleSubmit,
@@ -35,7 +47,8 @@ const SpendForm = ({ email, onSubmit }) => {
     // Combinar los datos del formulario con el email
     const formData = {
       ...data,
-      email, // Agregar el email a los datos del formulario
+      email, // Agregar email
+      category: categoria, // Agregar la categoría seleccionada
     };
 
     try {
@@ -134,6 +147,27 @@ const SpendForm = ({ email, onSubmit }) => {
         )}
       </div>
 
+      {/*Categoria*/}
+      <div className="mt-4 flex flex-wrap gap-3">
+        {categorias.map((categoriaOption) => (
+          <div
+            key={categoriaOption}
+            onClick={() => handleCategoriaClick(categoriaOption)}
+            className={`cursor-pointer px-4 py-2 rounded-md text-sm font-medium text-white text-center transition-colors duration-200 ease-in-out ${
+              categoria === categoriaOption
+                ? 'bg-indigo-600'
+                : 'bg-gray-300 hover:bg-gray-400'
+            }`}
+          >
+            {categoriaOption}
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-4 text-sm text-gray-500">
+        <span>Categoría seleccionada: </span>
+        <span className="font-semibold">{categoria}</span>
+      </div>
       {/* Submit Button */}
       <button
         type="submit"

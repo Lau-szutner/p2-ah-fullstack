@@ -90,6 +90,7 @@ const SpendList = () => {
           title={spend.title}
           description={spend.description}
           amount={spend.amount}
+          categoria={spend.category}
           createdAt={new Date(spend.createdAt).toLocaleString('es-ES', {
             weekday: 'long',
             year: 'numeric',

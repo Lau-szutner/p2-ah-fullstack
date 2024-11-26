@@ -15,6 +15,6 @@ router.post('/register', registerUser);
 router.post('/login', loginUser);
 
 // Ruta para hacer logout de usuario (limpiar cookies y headers)
-router.post('/logout', protect, logoutUser);
+router.post('/logout', logoutUser);
 
 export default router;

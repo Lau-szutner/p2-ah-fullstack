@@ -1,4 +1,3 @@
-// controllers/spendController.js
 import Spend from '../models/spendModel.js';
 
 // Obtener los gastos del usuario autenticado
@@ -21,34 +20,39 @@ export const getSpend = async (req, res) => {
   }
 };
 
+// Crear un gasto
 export const createSpend = async (req, res) => {
-  const { title, amount, description, email, date } = req.body; // Desestructurar email de la solicitud
+  const { title, amount, description, category, email } = req.body; // Incluir categoría
   const userId = req.user._id; // Obtener el userId del usuario autenticado
 
   try {
-    // Verificar si el email está presente
-    if (!email) {
-      return res.status(400).json({ message: 'El email es obligatorio' });
+    // Validar que los campos requeridos estén presentes
+    if (!email || !category) {
+      return res
+        .status(400)
+        .json({ message: 'El email y la categoría son obligatorios' });
     }
 
-    // Crear un nuevo gasto asociado al usuario autenticado y con el email
+    // Crear un nuevo gasto asociado al usuario autenticado
     const newSpend = new Spend({
       userId, // Asignar el userId al gasto
-      title,
-      amount,
-      description,
-      email, // Guardar el email en el gasto
-      createdAt: new Date(), // Asignar la fecha de creación manualmente si es necesario
+      title, // Título del gasto
+      amount, // Monto del gasto
+      description, // Descripción del gasto
+      category, // Categoría seleccionada
+      email, // Email del usuario autenticado
+      createdAt: new Date(), // Fecha de creación
     });
 
     const savedSpend = await newSpend.save(); // Guardar el gasto en la base de datos
     res.status(201).json(savedSpend); // Retornar el gasto guardado
   } catch (error) {
+    console.error('Error al crear el gasto:', error);
     res.status(400).json({ message: error.message }); // Manejo de errores
   }
 };
 
-// controllers/spendController.js
+// Eliminar un gasto
 export const deleteSpend = async (req, res) => {
   const { id } = req.params; // Obtener el ID del gasto desde los parámetros de la URL
 
