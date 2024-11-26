@@ -1,3 +1,4 @@
+// components/SpendList.jsx
 import React, { useEffect, useState } from 'react';
 import Spend from './Spend.jsx'; // Asegúrate de que el path sea correcto
 
@@ -38,7 +39,10 @@ const SpendList = () => {
       }
 
       const data = await response.json();
-      setSpends(data); // Guardar los gastos en el estado
+
+      // Filtrar los gastos que NO tienen un sharedEmail (gastos normales)
+      const normalSpends = data.filter((spend) => !spend.sharedEmail);
+      setSpends(normalSpends);
       setLoading(false);
     } catch (error) {
       setError(error.message);
@@ -50,7 +54,6 @@ const SpendList = () => {
     fetchSpends(); // Llamar a la API al cargar el componente
   }, []);
 
-  // components/SpendList.jsx
   const handleDelete = async (id) => {
     const token = getTokenFromCookies();
 
@@ -98,7 +101,6 @@ const SpendList = () => {
             day: 'numeric',
             hour: 'numeric',
             minute: 'numeric',
-
             hour12: false,
           })} // Formateando la fecha directamente
           onDelete={() => handleDelete(spend._id)}

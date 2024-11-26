@@ -47,20 +47,13 @@ const Header = () => {
             Gastos
           </a>
         </li>
+
         <li>
           <a
-            href="#about"
+            href="graficos"
             className="text-white text-lg font-medium hover:text-blue-300 transition-colors duration-200"
           >
-            Calendario
-          </a>
-        </li>
-        <li>
-          <a
-            href="#services"
-            className="text-white text-lg font-medium hover:text-blue-300 transition-colors duration-200"
-          >
-            Servicios
+            Graficos
           </a>
         </li>
         <li>

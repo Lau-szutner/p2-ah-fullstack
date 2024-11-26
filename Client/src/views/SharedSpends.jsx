@@ -1,6 +1,6 @@
 // components/SharedSpends.jsx
 import React, { useEffect, useState } from 'react';
-import SharedSpend from './SharedSpend.jsx'; // Asegúrate de que el path sea correcto
+import SharedSpend from '../components/SharedSpend.jsx'; // Asegúrate de que el path sea correcto
 
 const SharedSpends = () => {
   const [sharedSpends, setSharedSpends] = useState([]);

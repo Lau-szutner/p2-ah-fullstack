@@ -1,15 +1,18 @@
 import './App.css';
 import Header from './components/Header.jsx';
 import Home from './views/Home.jsx';
-import SharedSpends from './components/SharedSpends.jsx';
-import RegisterForm from './components/RegisterForm.jsx'; // Asegúrate de importar tu formulario de registro
+import SharedSpends from './views/SharedSpends.jsx';
+import RegisterForm from './components/RegisterForm.jsx';
 import { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import NotFound from './views/NotFound';
+import UnderConstruction from './views/underConstruction.jsx';
 
 function App() {
   const [token, setToken] = useState(null);
   const [email, setEmail] = useState(null);
+  const location = useLocation(); // Obtén la ubicación actual
 
   // Consumir las cookies al cargar el componente
   useEffect(() => {
@@ -29,6 +32,10 @@ function App() {
     setEmail(null);
   };
 
+  // Verificar si la ruta actual es una página especial (en construcción o no encontrada)
+  const isSpecialPage =
+    location.pathname === '/graficos' || location.pathname === '/404';
+
   return (
     <div className="min-h-screen flex flex-col bg-stone-950">
       <Header className="w-full" />
@@ -43,8 +50,8 @@ function App() {
         </section>
       ) : (
         <>
-          {/* Mostrar el contenido principal si hay token */}
-          {email && (
+          {/* Mostrar el contenido principal si hay token, excepto en rutas especiales */}
+          {!isSpecialPage && email && (
             <div className="text-white m-10">
               <h1 className="text-3xl font-bold text-center">
                 Bienvenido a mi App
@@ -62,8 +69,10 @@ function App() {
           )}
           <Routes>
             <Route path="/" element={<Home email={email} />} />
-            <Route path="/contacto" element={<div>Contacto</div>} />
-            <Route path="/GastosCompartidos" element={<SharedSpends />}></Route>
+            <Route path="/graficos" element={<UnderConstruction />} />
+            <Route path="/GastosCompartidos" element={<SharedSpends />} />
+            {/* Ruta de 404 para rutas no encontradas */}
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </>
       )}
