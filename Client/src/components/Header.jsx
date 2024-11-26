@@ -64,10 +64,10 @@ const Header = () => {
         </li>
         <li>
           <a
-            href="#contact"
+            href="#GastosCompartidos"
             className="text-white text-lg font-medium hover:text-blue-300 transition-colors duration-200"
           >
-            Contacto
+            Gastos compartidos
           </a>
         </li>
         <li>
