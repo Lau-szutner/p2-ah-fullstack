@@ -62,7 +62,7 @@ function App() {
             {/* Botón para abrir/cerrar el formulario de gasto */}
             <button
               onClick={toggleFormVisibility}
-              className="mt-6 bg-teal-600 text-white py-2 px-4 rounded-lg hover:bg-teal-700 transition-colors"
+              className="my-6 bg-teal-600 text-white py-2 px-4 rounded-lg hover:bg-teal-700 transition-colors"
             >
               {isFormVisible ? 'Cerrar Formulario' : 'Agregar Nuevo Gasto'}
             </button>

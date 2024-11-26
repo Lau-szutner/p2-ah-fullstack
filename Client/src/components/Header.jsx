@@ -37,7 +37,7 @@ const Header = () => {
       </div>
 
       {/* Navegación */}
-      <ul className="flex space-x-8">
+      <ul className="flex items-center space-x-8">
         <li>
           <a
             href="#home"
@@ -72,8 +72,8 @@ const Header = () => {
         </li>
         <li>
           <button
-            onClick={handleLogOut} // Llama al método de logout aquí
-            className="text-white text-lg bg-red-500 p-4 rounded-md font-medium hover:text-blue-300 transition-colors duration-200"
+            onClick={handleLogOut}
+            className="text-white text-lg bg-red-500 py-2 px-4 rounded-md font-medium hover:bg-red-600 transition-colors duration-200"
           >
             Logout
           </button>
