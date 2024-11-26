@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import SpendForm from './SpendForm';
-import RegisterForm from './RegisterForm';
-import SpendList from './SpendList.jsx';
+import SpendForm from '../components/SpendForm.jsx';
+import RegisterForm from '../components/RegisterForm.jsx';
+import SpendList from '../components/SpendList.jsx';
 
 const Home = ({ email }) => {
   const [isFormVisible, setIsFormVisible] = useState(false);

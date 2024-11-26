@@ -1,6 +1,7 @@
 import './App.css';
 import Header from './components/Header.jsx';
-import Home from './components/Home.jsx';
+import Home from './views/Home.jsx';
+import SharedSpends from './components/SharedSpends.jsx';
 import RegisterForm from './components/RegisterForm.jsx'; // Asegúrate de importar tu formulario de registro
 import { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
@@ -62,6 +63,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home email={email} />} />
             <Route path="/contacto" element={<div>Contacto</div>} />
+            <Route path="/GastosCompartidos" element={<SharedSpends />}></Route>
           </Routes>
         </>
       )}

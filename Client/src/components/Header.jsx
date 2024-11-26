@@ -41,7 +41,7 @@ const Header = () => {
       <ul className="flex items-center space-x-8">
         <li>
           <a
-            href="#home"
+            href="/"
             className="text-white text-lg font-medium hover:text-blue-300 transition-colors duration-200"
           >
             Gastos
@@ -65,7 +65,7 @@ const Header = () => {
         </li>
         <li>
           <a
-            href="#GastosCompartidos"
+            href="GastosCompartidos"
             className="text-white text-lg font-medium hover:text-blue-300 transition-colors duration-200"
           >
             Gastos compartidos
