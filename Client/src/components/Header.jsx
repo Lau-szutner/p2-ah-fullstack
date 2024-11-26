@@ -1,4 +1,5 @@
 import axios from 'axios';
+import perfil from '../assets/perfil.jpg';
 import React from 'react';
 
 const Header = () => {
@@ -25,11 +26,11 @@ const Header = () => {
   };
 
   return (
-    <nav className="w-full bg-teal-500 p-4 flex items-center justify-between sticky top-0 z-50 shadow-lg">
+    <nav className="w-full bg-yellow-700 p-4 flex items-center justify-between sticky top-0 z-50 shadow-lg">
       <div className="flex items-center space-x-4">
         {/* Logo */}
         <img
-          src=""
+          src={perfil}
           alt="Logo"
           className="w-10 h-10 rounded-full border-2 border-white"
         />

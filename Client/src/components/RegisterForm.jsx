@@ -94,18 +94,15 @@ const RegisterForm = () => {
   return (
     <form
       onSubmit={handleSubmit(isLogin ? handleLogin : handleRegister)}
-      className="bg-white p-6 rounded-lg shadow-lg max-w-xl mx-auto space-y-6 text-black"
+      className="bg-stone-700 p-6 rounded-lg shadow-lg max-w-xl mx-auto space-y-6 text-black"
     >
-      <h2 className="text-2xl font-semibold text-gray-800">
+      <h2 className="text-2xl font-semibold text-white">
         {isLogin ? 'Iniciar Sesión' : 'Registro de Usuario'}
       </h2>
 
       {/* Email */}
       <div className="space-y-2">
-        <label
-          htmlFor="email"
-          className="block text-sm font-medium text-gray-700"
-        >
+        <label htmlFor="email" className="block text-sm font-medium text-white">
           Correo Electrónico
         </label>
         <input
@@ -125,7 +122,7 @@ const RegisterForm = () => {
       <div className="space-y-2">
         <label
           htmlFor="password"
-          className="block text-sm font-medium text-gray-700"
+          className="block text-sm font-medium text-white"
         >
           Contraseña
         </label>
@@ -147,7 +144,7 @@ const RegisterForm = () => {
         <div className="space-y-2">
           <label
             htmlFor="confirmPassword"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-white"
           >
             Confirmar Contraseña
           </label>
@@ -181,7 +178,7 @@ const RegisterForm = () => {
       </button>
 
       {/* Toggle between login and register */}
-      <p className="text-sm text-center text-gray-500">
+      <p className="text-sm text-center text-white">
         {isLogin ? '¿No tienes cuenta?' : '¿Ya tienes cuenta?'}
         <button
           type="button"

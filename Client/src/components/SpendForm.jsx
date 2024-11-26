@@ -44,11 +44,11 @@ const SpendForm = ({ email, onSubmit }) => {
       return;
     }
 
-    // Combinar los datos del formulario con el email
     const formData = {
       ...data,
-      email, // Agregar email
-      category: categoria, // Agregar la categoría seleccionada
+      email, // Agregar email principal del usuario
+      category: categoria,
+      sharedEmail: data.sharedEmail || null, // Asegurar que sea null si no se ingresa
     };
 
     try {
@@ -78,7 +78,7 @@ const SpendForm = ({ email, onSubmit }) => {
       onSubmit={handleSubmit(handleFormSubmit)}
       className="bg-white p-6 rounded-lg shadow-lg max-w-xl mx-auto space-y-6 text-black"
     >
-      <h2 className="text-2xl font-semibold text-gray-800">Gastos</h2>
+      <h2 className="text-2xl font-semibold">Gastos</h2>
 
       {/* Title */}
       <div className="space-y-2">
@@ -162,6 +162,27 @@ const SpendForm = ({ email, onSubmit }) => {
             {categoriaOption}
           </div>
         ))}
+      </div>
+
+      {/* Usuario compartido */}
+      <div className="space-y-2">
+        <label
+          htmlFor="sharedEmail"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Correo del usuario compartido (opcional)
+        </label>
+        <input
+          id="sharedEmail"
+          type="email"
+          {...register('sharedEmail')}
+          className={`w-full p-3 border ${
+            errors.sharedEmail ? 'border-red-500' : 'border-gray-300'
+          } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500`}
+        />
+        {errors.sharedEmail && (
+          <p className="text-sm text-red-500">{errors.sharedEmail.message}</p>
+        )}
       </div>
 
       <div className="mt-4 text-sm text-gray-500">

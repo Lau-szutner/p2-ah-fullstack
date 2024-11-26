@@ -22,7 +22,7 @@ export const getSpend = async (req, res) => {
 
 // Crear un gasto
 export const createSpend = async (req, res) => {
-  const { title, amount, description, category, email } = req.body; // Incluir categoría
+  const { title, amount, description, category, email, sharedEmail } = req.body; // Incluir sharedEmail
   const userId = req.user._id; // Obtener el userId del usuario autenticado
 
   try {
@@ -41,6 +41,7 @@ export const createSpend = async (req, res) => {
       description, // Descripción del gasto
       category, // Categoría seleccionada
       email, // Email del usuario autenticado
+      sharedEmail: sharedEmail || null, // Guardar null si no se ingresa
       createdAt: new Date(), // Fecha de creación
     });
 

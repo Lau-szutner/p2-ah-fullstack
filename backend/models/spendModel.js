@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+// Definir el esquema
 const spendSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -21,7 +22,7 @@ const spendSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    enum: ['Comida', 'Servicios', 'Gastos varios', 'Transporte', 'Salud'], // Opciones válidas
+    enum: ['Comida', 'Servicios', 'Gastos varios', 'Transporte', 'Salud'],
     required: [true, 'La categoría es obligatoria'],
   },
   email: {
@@ -31,11 +32,21 @@ const spendSchema = new mongoose.Schema({
     trim: true,
     match: [/\S+@\S+\.\S+/, 'Por favor ingrese un correo electrónico válido'],
   },
+  sharedEmail: {
+    type: String,
+    trim: true,
+    lowercase: true,
+    match: [/\S+@\S+\.\S+/, 'Por favor ingrese un correo electrónico válido'],
+    default: null, // No es obligatorio
+  },
   createdAt: {
     type: Date,
     default: Date.now,
   },
 });
 
+// Crear el modelo a partir del esquema
 const Spend = mongoose.model('Spend', spendSchema);
+
+// Exportar el modelo
 export default Spend;
