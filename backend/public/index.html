@@ -108,6 +108,20 @@ Authorization: Bearer {token}
 </code>
         </pre>
 
+        <h4 class="mt-4 text-md font-semibold">6. Actualizar un gasto</h4>
+        <p><strong>Método:</strong> PUT</p>
+        <p><strong>Ruta:</strong> /spend/:id</p>
+        <p><strong>Descripción:</strong> Actualiza la información de un gasto existente.</p>
+        <pre class="bg-gray-800 p-4 rounded-lg text-white">
+<code>
+PUT http://localhost:3000/spend/:id
+
+Headers:
+Authorization: Bearer {token}
+Content-Type: application/json
+</code>
+        </pre>
+
 
         <h1 class="mt-4 text-xl font-semibold">ENDPOINTS DE BOOKTAGS</h1>
         <p>No estan en uso actualmente</p>
@@ -138,26 +152,6 @@ Headers:
 Authorization: Bearer {token}
 </code>
         </pre>
-        <h4 class="mt-4 text-md font-semibold">9. Actualizar un Libro</h4>
-        <p><strong>Método:</strong> PUT</p>
-        <p><strong>Ruta:</strong> /libros/:id</p>
-        <p><strong>Descripción:</strong> Actualiza la información de un libro existente.</p>
-        <pre class="bg-gray-800 p-4 rounded-lg text-white">
-<code>
-PUT http://localhost:3000/libros/:id
-
-Headers:
-Authorization: Bearer {token}
-Content-Type: application/json
-
-Body (JSON):
-{
-    "title": "Título Actualizado",
-    "author": "Autor Actualizado"
-}
-</code>
-        </pre>
-
 
         <h4 class="mt-4 text-md font-semibold">11. Obtener libro por title</h4>
         <p><strong>Método:</strong> GET</p>
