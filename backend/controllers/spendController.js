@@ -70,3 +70,33 @@ export const deleteSpend = async (req, res) => {
     res.status(500).json({ message: 'Error al eliminar el gasto' });
   }
 };
+// Editar un gasto
+export const editSpend = async (req, res) => {
+  const { id } = req.params; // Obtener el ID del gasto desde los parámetros de la URL
+  const { title, amount, description, category, sharedEmail } = req.body; // Datos a actualizar
+
+  try {
+    // Buscar y actualizar el gasto con los datos proporcionados
+    const updatedSpend = await Spend.findByIdAndUpdate(
+      id,
+      {
+        title, // Título del gasto
+        amount, // Monto del gasto
+        description, // Descripción del gasto
+        category, // Categoría seleccionada
+        sharedEmail: sharedEmail || null, // Email compartido (si aplica)
+      },
+      { new: true } // Retornar el documento actualizado
+    );
+
+    // Verificar si se encontró y actualizó el gasto
+    if (!updatedSpend) {
+      return res.status(404).json({ message: 'Gasto no encontrado' });
+    }
+
+    res.status(200).json(updatedSpend); // Retornar el gasto actualizado
+  } catch (error) {
+    console.error('Error al editar el gasto:', error);
+    res.status(500).json({ message: 'Error al editar el gasto' });
+  }
+};

@@ -4,18 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Documentación de la API BookTags - Ordenado</title>
+    <title>Documentación SpendTracker</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="min-h-screen flex flex-col">
     <header class="bg-gray-800 text-white p-4">
-        <h1 class="text-3xl font-bold">Documentación de la API BookTags</h1>
+        <h1 class="text-3xl font-bold">Documentación de la API SpendTracker</h1>
     </header>
 
     <main class="flex-grow container mx-auto p-4">
         <h2 class="text-xl font-semibold">Descripción</h2>
-        <p>Esta es una API RESTful para la gestión de libros y autores.</p>
+        <p>Esta es una API RESTful para la gestion de gastos.</p>
 
         <h3 class="mt-6 text-lg font-semibold">Endpoints disponibles</h3>
 
@@ -58,13 +58,13 @@ Body (JSON):
 </code>
         </pre>
 
-        <h4 class="mt-4 text-md font-semibold">3. Crear un Autor</h4>
+        <h4 class="mt-4 text-md font-semibold">3. Crear un gasto</h4>
         <p><strong>Método:</strong> POST</p>
-        <p><strong>Ruta:</strong> /author</p>
-        <p><strong>Descripción:</strong> Crea un nuevo autor.</p>
+        <p><strong>Ruta:</strong> spend</p>
+        <p><strong>Descripción:</strong> Crea un nuevo gasto.</p>
         <pre class="bg-gray-800 p-4 rounded-lg text-white">
 <code>
-POST http://localhost:3000/author/ 
+POST http://localhost:3000/spend
 
 Headers:
 Authorization: Bearer {token}
@@ -72,21 +72,36 @@ Content-Type: application/json
 
 Body (JSON):
 {
-    "name": "Stephen King",
-    "dob": "21/10/1947",
-    "description": "Stephen Edwin King, más conocido como Stephen King y ocasionalmente por su pseudónimo Richard Bachman, es un escritor estadounidense de novelas de terror, ficción sobrenatural, misterio, ciencia ficción y literatura fantástica."
-}
-    
+"title": "Pago de luz",
+"amount": 1500,
+"description": "Factura mensual de electricidad",
+"category": "Servicios",
+"email": "usuario@example.com",
+"sharedEmail": "compartido@example.com"
+}    
 </code>
         </pre>
         <!-- Sección de Autores -->
-        <h4 class="mt-4 text-md font-semibold">4. Obtener Todos los Autores</h4>
+        <h4 class="mt-4 text-md font-semibold">4. Obtener Todos los gastos</h4>
         <p><strong>Método:</strong> GET</p>
-        <p><strong>Ruta:</strong> /authors</p>
-        <p><strong>Descripción:</strong> Obtiene una lista de todos los autores y sus ids, los cuales deben ser usados en la creación de libros</p>
+        <p><strong>Ruta:</strong> /spend</p>
+        <p><strong>Descripción:</strong> Obtiene una lista de todos los gastos</p>
         <pre class="bg-gray-800 p-4 rounded-lg text-white">
 <code>
-GET http://localhost:3000/author/
+GET http://localhost:3000/spend
+
+Headers:
+Authorization: Bearer {token}
+</code>
+        </pre>
+
+        <h4 class="mt-4 text-md font-semibold">5. Eliminar un gasto</h4>
+        <p><strong>Método:</strong> DELETE</p>
+        <p><strong>Ruta:</strong> /spend/:id</p>
+        <p><strong>Descripción:</strong> Elimina un gasto por su ID.</p>
+        <pre class="bg-gray-800 p-4 rounded-lg text-white">
+<code>
+DELETE http://localhost:3000/spend/{id}
 
 Headers:
 Authorization: Bearer {token}
@@ -94,25 +109,14 @@ Authorization: Bearer {token}
         </pre>
 
 
-
-        <!-- Sección de Libros -->
-        <h4 class="mt-4 text-md font-semibold">5. Obtener Todos los Libros</h4>
-        <p><strong>Método:</strong> GET</p>
-        <p><strong>Ruta:</strong> /libros</p>
-        <p><strong>Descripción:</strong> Obtiene una lista de todos los libros.</p>
-        <pre class="bg-gray-800 p-4 rounded-lg text-white">
-<code>
-GET http://localhost:3000/libros
-
-Headers:
-Authorization: Bearer {token}
-</code>
-        </pre>
-
+        <h1 class="mt-4 text-xl font-semibold">ENDPOINTS DE BOOKTAGS</h1>
+        <p>No estan en uso actualmente</p>
+        <!-- IMPLEMENTAR  -->
         <h4 class="mt-4 text-md font-semibold">6. Filtrar Libros</h4>
         <p><strong>Método:</strong> GET</p>
         <p><strong>Ruta:</strong> /libros/filter</p>
-        <p><strong>Descripción:</strong> Filtra los libros por (title, yearPublished, genre), devuelve los libros que coincidan con estos parametros</p>
+        <p><strong>Descripción:</strong> Filtra los libros por (title, yearPublished, genre), devuelve los libros que
+            coincidan con estos parametros</p>
         <pre class="bg-gray-800 p-4 rounded-lg text-white">
 <code>
 GET http://localhost:3000/libros/filter?param=value
@@ -134,37 +138,6 @@ Headers:
 Authorization: Bearer {token}
 </code>
         </pre>
-
-        <h4 class="mt-4 text-md font-semibold">8. Crear un Libro</h4>
-        <p><strong>Método:</strong> POST</p>
-        <p><strong>Ruta:</strong> /libros</p>
-        <p><strong>Descripción:</strong> Crea un nuevo libro, todos los campos son obligatorios y se debe elegir un género.</p>
-        <pre class="bg-gray-800 p-4 rounded-lg text-white">
-<code>
-POST http://localhost:3000/libros
-
-Headers:
-Authorization: Bearer {token}
-Content-Type: application/json
-
-Body (JSON):
-{
-    "title": String,
-    "author": (Stephen king ID),
-    "yearPublished": Number,
-    "genre": {
-        'Ficción',
-        'No ficción',
-        'Ciencia ficción',
-        'Fantasía',
-        'Misterio',
-        'Biografía',
-    },
-    "pages": Number
-}
-</code>
-        </pre>
-
         <h4 class="mt-4 text-md font-semibold">9. Actualizar un Libro</h4>
         <p><strong>Método:</strong> PUT</p>
         <p><strong>Ruta:</strong> /libros/:id</p>
@@ -185,20 +158,7 @@ Body (JSON):
 </code>
         </pre>
 
-        <h4 class="mt-4 text-md font-semibold">10. Eliminar un Libro</h4>
-        <p><strong>Método:</strong> DELETE</p>
-        <p><strong>Ruta:</strong> /libros/:id</p>
-        <p><strong>Descripción:</strong> Elimina un libro por su ID.</p>
-        <pre class="bg-gray-800 p-4 rounded-lg text-white">
-<code>
-DELETE http://localhost:3000/libros/{id}
 
-Headers:
-Authorization: Bearer {token}
-</code>
-        </pre>
-
-        
         <h4 class="mt-4 text-md font-semibold">11. Obtener libro por title</h4>
         <p><strong>Método:</strong> GET</p>
         <p><strong>Ruta:</strong> /libros/title/:tile</p>
@@ -213,10 +173,11 @@ Authorization: Bearer {token}
         </pre>
 
         <h4 class="mt-4 text-md font-semibold">12. Obtener Libros Ordenados</h4>
-<p><strong>Método:</strong> GET</p>
-<p><strong>Ruta:</strong> /libros/sort</p>
-<p><strong>Descripción:</strong> Obtiene una lista de libros ordenados por el campo especificado en los parámetros de consulta.</p>
-<pre class="bg-gray-800 p-4 rounded-lg text-white">
+        <p><strong>Método:</strong> GET</p>
+        <p><strong>Ruta:</strong> /libros/sort</p>
+        <p><strong>Descripción:</strong> Obtiene una lista de libros ordenados por el campo especificado en los
+            parámetros de consulta.</p>
+        <pre class="bg-gray-800 p-4 rounded-lg text-white">
 <code>
 GET http://localhost:3000/libros/sort?sort={campo}&order={asc|desc}
 

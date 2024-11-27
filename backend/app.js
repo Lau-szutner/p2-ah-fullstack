@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import bodyParser from 'body-parser';
-import librosRoutes from './routes/librosRoutes.js';
+
 import spendRoutes from './routes/spendRoutes.js';
 import authRoutes from './routes/authRoutes.js'; // Rutas de autenticación
 import { protect } from './middleware/authMiddleware.js'; // Middleware de autenticación
@@ -35,7 +35,7 @@ app.use(express.static(path.join(__dirname, 'public'))); // Archivos estáticos 
 app.get('/api/data', (req, res) => {
   res.json({ message: 'this is a message from cors' });
 });
-app.use('/libros', protect, librosRoutes); // Rutas de libros protegidas
+
 app.use('/spend', protect, spendRoutes); // Rutas de gastos, protegidas
 app.use('/auth', authRoutes); // Rutas de autenticación, no protegidas
 

@@ -5,6 +5,7 @@ import {
   getSpend,
   createSpend,
   deleteSpend,
+  editSpend,
 } from '../controllers/spendController.js'; // Controladores de gastos
 
 const router = express.Router();
@@ -18,4 +19,5 @@ router.post('/', protect, createSpend); // protect asegura que el usuario esté 
 // routes/spendRoutes.js
 router.delete('/:id', protect, deleteSpend); // Ruta para eliminar el gasto por ID
 
+router.put('/:id', protect, editSpend);
 export default router;
