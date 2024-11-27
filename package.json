@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "npm run start-client & npm run start-api",
+    "install": "npm run install-client && npm run install-api",
+    "install-client": "cd client && npm install",
+    "install-api": "cd backend && npm install",
+    "start": "npm run install && npm run start-client & npm run start-api",
     "start-client": "cd client && npm run dev",
     "start-api": "cd backend && npm run start"
   },

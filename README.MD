@@ -10,27 +10,51 @@ El usuario debe crear una cuenta y iniciar sesión para poder acceder a la aplic
 
 Antes de ejecutar el proyecto, asegúrate de tener instaladas las siguientes herramientas:
 
-- Node.js (version recomendada: 18.x o superior)
+- Node.js (versión recomendada: 18.x o superior)
 - npm (incluido con Node.js)
 - MongoDB en funcionamiento (puedes usar un servicio como MongoDB Atlas o una instalación local)
 
 ## Correr el Proyecto
 
-Para ejecutar el proyecto, usa el siguiente comando desde la carpeta raíz del proyecto:
+### 1. Instalación de Dependencias
+
+Antes de iniciar el proyecto, es necesario instalar las dependencias del cliente y del servidor. Para ello, ejecuta el siguiente comando desde la carpeta raíz del proyecto:
+
+```bash
+npm run install
+```
+
+Este comando ejecutará los scripts de instalación que instalarán las dependencias tanto para el cliente como para el backend.
+
+### 2. Iniciar la Aplicación
+
+Una vez que las dependencias estén instaladas, puedes iniciar la aplicación con el siguiente comando:
 
 ```bash
 npm run start
 ```
 
-Este comando ejecutará dos procesos simultáneamente para levantar tanto el backend como el frontend.
+Este comando ejecuta varios procesos de instalación y levanta tanto el backend como el frontend.
 
 ### package.json (Raíz)
 
 ```json
-"scripts": {
-  "start": "npm run start-client & npm run start-api",
-  "start-client": "cd client && npm run dev",
-  "start-api": "cd backend && npm run start"
+{
+  "name": "app-hibridas-parcial-2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "install": "npm run install-client && npm run install-api",
+    "install-client": "cd client && npm install",
+    "install-api": "cd backend && npm install",
+    "start": "npm run install && npm run start-client & npm run start-api",
+    "start-client": "cd client && npm run dev",
+    "start-api": "cd backend && npm run start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
 ```
 
@@ -39,8 +63,8 @@ Este comando ejecutará dos procesos simultáneamente para levantar tanto el bac
 Cuando ejecutes `npm run start`, deberías ver la siguiente información en la terminal:
 
 ```bash
-➜  Local:   http://localhost:5173/
-➜  Network: use --host to expose
+➞  Local:   http://localhost:5173/
+➞  Network: use --host to expose
 Servidor corriendo en http://localhost:3000
 Conexión con MongoDB exitosa
 ```
@@ -52,5 +76,3 @@ Conexión con MongoDB exitosa
 
 - El token de autenticación se guarda en las cookies para mantener la sesión del usuario entre solicitudes.
 - Para verificar que el token se maneja correctamente, asegúrate de que las cookies estén configuradas para que sean seguras y tengan una política de SameSite apropiada.
-
----
