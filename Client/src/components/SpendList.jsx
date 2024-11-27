@@ -54,6 +54,7 @@ const SpendList = () => {
     fetchSpends(); // Llamar a la API al cargar el componente
   }, []);
 
+  // Manejo de eliminación de un gasto
   const handleDelete = async (id) => {
     const token = getTokenFromCookies();
 
@@ -82,6 +83,42 @@ const SpendList = () => {
     }
   };
 
+  // Manejo de edición de un gasto
+  const handleEdit = async (id, updatedSpend) => {
+    const token = getTokenFromCookies();
+
+    if (!token) {
+      setError('Token no encontrado en las cookies');
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:3000/spend/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`, // Usa el token obtenido de las cookies
+        },
+        body: JSON.stringify(updatedSpend), // Envía los datos actualizados
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al editar el gasto');
+      }
+
+      const updatedSpendData = await response.json();
+
+      // Actualizar el estado con el gasto editado
+      setSpends(
+        spends.map((spend) =>
+          spend._id === id ? { ...spend, ...updatedSpendData } : spend
+        )
+      );
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
   if (loading) return <p>Cargando gastos...</p>;
   if (error) return <p>Error: {error}</p>;
 
@@ -102,8 +139,9 @@ const SpendList = () => {
             hour: 'numeric',
             minute: 'numeric',
             hour12: false,
-          })} // Formateando la fecha directamente
+          })}
           onDelete={() => handleDelete(spend._id)}
+          onEdit={(updatedSpend) => handleEdit(spend._id, updatedSpend)} // Envía los datos editados
         />
       ))}
     </div>
